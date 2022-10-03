@@ -23,6 +23,7 @@ public class IndexController {
         return "index";
     }
 
+
     @GetMapping("/user")
     public @ResponseBody String user() {
         return "유저 페이지입니다.";
