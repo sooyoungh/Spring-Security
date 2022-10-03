@@ -1,5 +1,7 @@
 package com.example.security.config;
 
+import com.example.security.config.oauth.PrincipalOAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity // 해당 필터가 필터체인에 등록
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
+
+    @Autowired
+    private PrincipalOAuth2UserService principalOAuth2UserService;
 
     @Bean
     public BCryptPasswordEncoder encodePwd() {
@@ -35,7 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
                 /* 구글 로그인 설정 */
                 .and()
                 .oauth2Login()
-                .loginPage("/loginForm");
-
+                .loginPage("/loginForm")
+                /* 구글 로그인 완료 후 후처리 */
+                /* 코드 받기(인증) -> 엑세스 토큰(권한) -> 사용자 프로필 정보 가져옴 -> 이 정보로 회원가입 시킬 수 있음*/
+                /* 로그인 완료 시, {토큰 + 프로필 정보}를 받음! */
+                .userInfoEndpoint()
+                .userService(principalOAuth2UserService);
     }
 }

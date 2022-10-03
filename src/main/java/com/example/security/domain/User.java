@@ -26,6 +26,10 @@ public class User {
     private String email;
     private String role; //ROLE_USER, ROLE_ADMIN
 
+    // 구글 로그인
+    private String provider;   // "google"
+    private String providerId; // 구글 id 값
+
     @CreationTimestamp
     private Timestamp createDate;
 }
