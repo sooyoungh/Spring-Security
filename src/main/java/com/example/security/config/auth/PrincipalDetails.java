@@ -7,6 +7,7 @@ package com.example.security.config.auth;
 // Security Context Holder 에 키값 (세션 정보) 저장
 
 import com.example.security.domain.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,7 @@ import java.util.Collection;
 // 객체 위계
 // Security Session (Authentication ( UserDetails ( PrincipalDetails 객체 ) ) ) )
 // 여기서 PrincipalDetails 주입받아 UserDetails 객체까지 만듦
+@Data
 public class PrincipalDetails implements UserDetails {
 
     // 입력 받은 유저 정보
